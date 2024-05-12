@@ -1,0 +1,1424 @@
+﻿
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8" />
+<title>MybatisGenerator自动生成插件</title>
+</head>
+
+<style>
+.btn {
+	margin-right: 50px;
+	min-width: 69px; /* 宽度 */
+	height: 28px; /* 高度 */
+	border-width: 0px; /* 边框宽度 */
+	border-radius: 3px; /* 边框半径 */
+	cursor: pointer; /* 鼠标移入按钮范围时出现手势 */
+	outline: none; /* 不显示轮廓线 */
+	font-family: Microsoft YaHei; /* 设置字体 */
+	font-size: 12px; /* 字体大小 */
+}
+
+.btn.disabled, .btn:disabled {
+    background-color: #aaaaaa;
+    border: 1px solid #aaaaaa;
+    color: #ffffff;
+}
+.btn-green {
+	background: #00b04e; /* 背景颜色 */
+	color: white; /* 字体颜色 */
+}
+.btn-red {
+	background: red; /* 背景颜色 */
+	color: white; /* 字体颜色 */
+	
+}
+.btn-d-blue {
+    background: #1e70c4d1;
+    color: white;
+}
+.btn-right {
+	float: right;
+}
+.formwrap .line{
+	
+	line-height: 28px;
+	    margin: 28px;
+}
+.formwrap .line:before,
+.formwrap .line:after {
+  content: '';
+  display: table;
+}
+.formwrap .line:after {
+  clear: both;
+}
+.formwrap .line.line-nocaption {
+  margin-left: 100px;
+}
+.formwrap .line.line-nocaption .button {
+  margin-left: 0;
+}
+.formwrap .line .caption {
+  display: inline-block;
+  float: left;
+  font-size: 12px;
+  line-height: 28px;
+  width: 100px;
+  height: 28px;
+  margin-left: 10px;
+}
+.formwrap input[type=text],
+.formwrap input[type=password],
+.formwrap input[type=search],
+.formwrap input[type=date],
+.formwrap select {
+  width: 80%;
+  height: 28px;
+  font-size: 12px;
+  border: 1px solid #d7d7d7;
+}
+input[type=text],
+input[type=password],
+input[type=search],
+input[type=date],
+input[type=checkbox],
+select,
+textarea {
+  border: 1px solid #d3d3d3;
+  font-size: 14px;
+  height: auto;
+  margin: 0;
+  padding: 4px 6px;
+  box-sizing: border-box;
+}
+.formwrap input[disabled=disabled] {
+  background-color: #ffffff;
+  width: 600px;
+}
+.formwrap .line .line-left {
+  margin-left: 20px;
+  width: 60px;
+}
+.formwrap .line ul {
+  float: left;
+}
+.formwrap .line ul li {
+  padding: 0 0 25px 0;
+}
+.formwrap .line ul li:last-child {
+  padding-bottom: 0;
+}
+.formwrap .line select.permission {
+  width: 355px;
+}
+.formwrap .line .button {
+  margin-left: 15px;
+}
+.formwrap .line .star {
+  margin: 6px 6px 0 8px;
+  display: inline-block;
+  color: #ea0605;
+  vertical-align: top;
+  position: relative;
+}
+.formwrap .line .sep {
+  margin: 0 8px;
+  display: inline-block;
+  line-height: 28px;
+  color: #222;
+  font-size: 12px;
+  width: 12px;
+}
+.formwrap .line .sep-right {
+  margin-right: 8px;
+  display: inline-block;
+  line-height: 28px;
+  color: #222;
+  font-size: 12px;
+  width: 12px;
+}
+.formwrap .line .notnull {
+  color: #666666;
+  font-size: 12px;
+  display: inline-block;
+  line-height: 28px;
+}
+.formwrap .line .textarea {
+  width: 80%;
+  height: 120px;
+  vertical-align: top;
+}
+
+
+.formwrap .line-top {
+  margin-top: 15px;
+}
+.formwrap .line-btn {
+  text-align: center;
+}
+.formwrap .line-btn .button {
+  width: 130px;
+  margin-right: 20px;
+  line-height: 30px;
+}
+
+
+/* ------------------------ */
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-size: 12px;
+}
+
+#content {
+	margin: 31px auto;
+	width: 80%;
+	border: 1px #f1f1f1d6  solid;
+	box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.2);
+	transform-origin: center top 0px;
+}
+
+#tabs {
+	height: 30px;
+	background: #2678be;
+	overflow: hidden;
+	position: relative;
+	margin-top: 10px;
+}
+
+#tabs #state {
+	display: block;
+	top: 0;
+	right: 0;
+	width: 30px;
+	height: 30px;
+	font-size: 24px;
+	font-weight: 700;
+	text-align: center;
+	color: #fff;
+	cursor: pointer;
+	position: absolute;
+}
+
+#tabs li {
+	box-sizing: border-box;
+    border-radius: 1px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.2);
+	display: inline;
+	padding: 0 28px;
+	line-height: 30px;
+	color: #fff;
+	list-style: none;
+	cursor: pointer;
+	float: left;
+}
+
+#tabs .active {
+	color: #000;
+	background: #fff;
+	border-top: 1px #2678be solid;
+}
+
+#list {
+	padding: 10px 0;
+}
+
+#list ul {
+	margin: 0 25px;
+	display: none;
+}
+
+#list ul li {
+	height: 25px;
+	line-height: 25px;
+}
+
+#list .active {
+	display: block;
+}
+.leftBar .title, .rightBar .title, .topBar .title {
+    margin-bottom: 10px;
+}
+#content textarea, #mainContent input[type='text'] {
+    border: 1px solid #ccc;
+}
+.resizable-textarea textarea {
+    display: block;
+    margin-bottom: 0pt;
+}
+.topBar textarea, .bottomBar textarea {
+    width: 80%;
+    height: 200px;
+}
+textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus {
+    border-color: rgba(82, 168, 236, 0.8);
+    outline: 0;
+    outline: thin dotted \9;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6);
+    -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6);
+}
+label {font-size:12px;cursor:pointer;}
+label i {font-size:12px;font-style:normal;display:inline-block;width:12px;height:12px;text-align:center;line-height:12px;color:#fff;vertical-align:middle;margin:-2px 2px 1px 0px;border:#2489c5 1px solid;}
+input[type="checkbox"],input[type="radio"] {display:none;}
+input[type="radio"] + i {border-radius:7px;}
+input[type="checkbox"]:checked + i,input[type="radio"]:checked + i {background:#24c529;}
+input[type="checkbox"]:disabled + i,input[type="radio"]:disabled + i {border-color:#ccc;}
+input[type="checkbox"]:checked:disabled + i,input[type="radio"]:checked:disabled + i {background:#ccc;}
+.checkboxpading label{
+	padding : 15px;
+}
+</style>
+<body>
+
+
+	<div id="content" style="min-height:650px;">
+		<div style="min-height: 45px;">
+
+			<p style="color:#777;font-size: 28px;line-height: 45px">
+				MybatisGenerator自动生成插件
+
+			</p>
+		</div>
+		<div id="tabs">
+			<ul>
+				<li class="active">MybatisXML生成</li>
+				<li >实体类生成</li>
+			</ul>
+			<!-- <span id="state">-</span> -->
+		</div>
+		<div id="list">
+			<ul class="active">
+						<div class="formwrap">
+								<div class="line checkboxpading">
+										<label><input type="checkbox" value="All" id="project-mysql-checkAll" checked><i>✓</i>全选</label>
+										<label style="margin-left: -18px;"><input class="mybatischeck" type="checkbox" value="ResultMap" checked><i>✓</i>ResultMap</label>
+										<label><input class="mybatischeck" type="checkbox" value="SelectList" checked><i>✓</i>SelectList</label>
+										<label><input class="mybatischeck" type="checkbox" value="SelectOne" checked><i>✓</i>SelectOne</label>
+										<label><input class="mybatischeck" type="checkbox" value="Insert" checked><i>✓</i>Insert</label>
+										<label><input class="mybatischeck" type="checkbox" value="InsertSelective" checked><i>✓</i>InsertSelective</label>
+										<label><input class="mybatischeck" type="checkbox" value="InsertBatch" checked><i>✓</i>InsertBatch</label>
+										<label><input class="mybatischeck" type="checkbox" value="Update" checked><i>✓</i>Update</label>
+										<label><input class="mybatischeck" type="checkbox" value="UpdateSelective" checked><i>✓</i>UpdateSelective</label>
+										<label><input class="mybatischeck" type="checkbox" value="Delete" checked><i>✓</i>Delete</label>
+										<!-- <label><input type="checkbox"><i>✓</i>复选框</label><br>
+										<label><input type="checkbox" checked><i>✓</i>复选框</label><br>
+										<label><input type="checkbox" disabled><i>✓</i>复选框禁用</label><br>
+										<label><input type="checkbox" disabled checked><i>✓</i>复选框禁用已选</label><br>
+										<label><input type="radio" name="abc"><i>✓</i>单选框</label><br>
+										<label><input type="radio" name="abc" checked><i>✓</i>单选框</label><br>
+										<label><input type="radio" name="abc" disabled><i>✓</i>单选框禁用</label><br>
+										<label><input type="radio" name="def" disabled checked><i>✓</i>单选框禁用已选</label><br> -->
+								</div>
+								<div class="line">
+									<span  class="caption">驼峰命名:</span>
+									<label style="margin-right: 35px;"><input checked  type="radio" name="hump"  value="1"><i>✓</i>是</label>
+									<label><input type="radio" name="hump" value="0"><i>✓</i>否</label>
+								</div>
+								<div class="line">
+										<label for="project-mysql-id" class="caption">*主键:</label> <input
+											type="text" name="modelName" value="" id="project-mysql-id" placeholder="请输入主键,如id" />
+								</div>
+							<!--	<div class="line">
+										<label for="project-mysql-table" class="caption">*表名:</label> <input
+											type="text" name="modelName" value="" id="project-mysql-table" placeholder="请输入表名" />
+								</div> -->
+								<div class="line">
+										<label for="project-mysql-entity" class="caption">*实体:</label> <input
+											type="text" name="modelName" id="project-mysql-entity" value="" placeholder="请输入对应实体，如com.develop.apply.vo.User" />
+								</div>
+								<div class="line">
+										<label for="project-mysql-namespace" class="caption">namespace:</label> <input
+											type="text" name="modelName" value="" id="project-mysql-namespace" placeholder="请输入namespace" />
+								</div>
+								<div class="line topBar">
+									<label for="project-mysql-html" class="caption">*建表语句:</label> 
+										<div class="resizable-textarea">
+											<span>
+												<textarea name="html" id="project-mysql-html" style="resize: none;" placeholder="输入Create Table语句" class="resizable processed"></textarea>
+												<div class="grippie" style="margin-right: -8px;"></div>
+											</span>
+										</div>
+								</div>
+								<div class="line-btn">
+										<button type="submit" class="btn btn-green button" onclick="example('1')"  >示例</button>
+										<button type="submit" class="btn btn-red button" disabled onclick="generatorMybatisXml('project-mysql-result')" id="project-mysql-submit" >生成</button>
+								</div>
+								<div class="line topBar">
+										<label for="project-mysql-result" class="caption">格式化HTML:</label> 
+											<div class="resizable-textarea">
+											<span>
+												 <textarea name="html" id="project-mysql-result" style="resize: none;" class="resizable processed"></textarea>
+												<div class="grippie" style="margin-right: -8px;"></div>
+											</span>
+											</div>
+								</div>
+								<div class="line topBar">
+										<label for="project-mysql-result-dao" class="caption">生成的DAO:</label> 
+											<div class="resizable-textarea">
+											<span>
+												 <textarea name="html" id="project-mysql-result-dao" style="resize: none;" class="resizable processed"></textarea>
+												<div class="grippie" style="margin-right: -8px;"></div>
+											</span>
+											</div>
+								</div>
+	
+				</ul>
+			<!-- 生成实体类 -->
+			<ul >
+				<div class="formwrap">
+					<div class="line">
+							<span  class="caption">驼峰命名:</span>
+							<label style="margin-right: 35px;"><input type="radio"  name="hump-model" checked value="1"><i>✓</i>是</label>
+							<label><input type="radio" name="hump-model" value="0"><i>✓</i>否</label>
+					</div>
+					<div class="line">
+						<label for="project-modelName-m" class="caption">类名:</label> <input
+							type="text" name="modelName" id="project-modelName-m" placeholder="请输入类名" />
+					</div>
+					<div class="line">
+						<label for="project-packageInfo-m" class="caption">包名:</label> <input
+							type="text" name="packageInfo" id="project-packageInfo-m" placeholder="请输入包名" />
+					</div>
+					
+					<div class="line topBar">
+						<label for="project-name" class="caption">建表语句:</label> 
+							<div class="resizable-textarea">
+							<span>
+						 		<textarea name="html" id="project-data-m" style="resize: none;" placeholder="输入Create Table语句" class="resizable processed"></textarea>
+								<div class="grippie" style="margin-right: -8px;"></div>
+							</span>
+					</div>
+					</div>
+					<div class="line-btn">
+						<button type="submit" class="btn btn-green button" onclick="example('2')"  >示例</button>
+						<button type="submit" class="btn btn-red button" onclick="generatorModel()" id="filesubmit" >生成</button>
+					</div>
+					<div class="line topBar">
+						<label for="project-name" class="caption">格式化HTML:</label> 
+							<div class="resizable-textarea">
+							<span>
+						 		<textarea name="html" id="project-result-m" style="resize: none;" class="resizable processed"></textarea>
+								<div class="grippie" style="margin-right: -8px;"></div>
+							</span>
+					</div>
+					</div>
+				</div>
+			</ul>
+
+
+		</div>
+	</div>
+
+</body>
+<script type="text/javascript">
+	String.prototype.endWith=function(endStr){
+		var d=this.length-endStr.length;
+		return (d>=0&&this.lastIndexOf(endStr)==d)
+    }
+		var formAttr=["project-mysql-id","project-mysql-entity","project-mysql-html"];
+		var matchId = false;
+		var relationList=[
+			{mysqlType : "VARCHAR",mybatisType:"VARCHAR",javaType:"java.lang.String",javaMybatis:"string"},
+			{mysqlType : "CHAR",mybatisType:"CHAR",javaType:"java.lang.String",javaMybatis:"string"},
+			{mysqlType : "TEXT",mybatisType:"VARCHAR",javaType:"java.lang.String",javaMybatis:"string"},
+			{mysqlType : "longtext",mybatisType:"VARCHAR",javaType:"java.lang.String",javaMybatis:"string"},
+			{mysqlType : "tinytext",mybatisType:"VARCHAR",javaType:"java.lang.String",javaMybatis:"string"},
+			{mysqlType : "INTEGER",mybatisType:"INTEGER",javaType:"java.lang.Integer",javaMybatis:"int"},
+			{mysqlType : "int",mybatisType:"INTEGER",javaType:"java.lang.Integer",javaMybatis:"int"},
+			{mysqlType : "smallint",mybatisType:"INTEGER",javaType:"java.lang.Integer",javaMybatis:"int"},
+			{mysqlType : "TINYINT",mybatisType:"INTEGER",javaType:"java.lang.Integer",javaMybatis:"int"},
+			{mysqlType : "BIGINT",mybatisType:"BIGINT",javaType:"java.lang.Long",javaMybatis:"long"},
+			{mysqlType : "FLOAT",mybatisType:"FLOAT",javaType:"java.lang.Float",javaMybatis:"float"},
+			{mysqlType : "DOUBLE",mybatisType:"DOUBLE",javaType:"java.lang.Double",javaMybatis:"double"},
+			{mysqlType : "DATE",mybatisType:"DATE",javaType:"java.util.Date",javaMybatis:"Date"},	
+			{mysqlType : "DATETIME",mybatisType:"TIMESTAMP",javaType:"java.util.Date",javaMybatis:"Date"},
+			{mysqlType : "TIMESTAMP",mybatisType:"TIMESTAMP",javaType:"java.util.Date",javaMybatis:"Date"},
+			{mysqlType : "DECIMAL",mybatisType:"DECIMAL",javaType:"java.math.BigDecimal",javaMybatis:"java.math.BigDecimal"},
+			{mysqlType : "BLOB",mybatisType:"BLOB",javaType:"java.sql.Blob",javaMybatis:"Blob"},
+			{mysqlType : "CLOB",mybatisType:"CLOB",javaType:"java.sql.Clob",javaMybatis:"Clob"},
+			{mysqlType : "NUMERIC",mybatisType:"NUMERIC",javaType:"java.math.BigDecimal",javaMybatis:"java.math.BigDecimal"},
+			{mysqlType : "REAL",mybatisType:"REAL",javaType:"java.lang.Float",javaMybatis:"float"}
+			  
+		];
+		var constraintKeywords = ["PRIMARY KEY","KEY","CONSTRAINT","FOREIGN KEY","NOT NULL","unique","AUTO_INCREMENT","check"];
+	
+		function mybatisValid(){
+			var flag=true;
+			for (let index = 0; index < formAttr.length; index++) {
+				const element = formAttr[index];
+				if(!document.getElementById(element).value){
+					flag=false;
+					break;
+				}
+			}
+			if(flag){
+				document.getElementById("project-mysql-submit").disabled=false;
+				// $("#project-mysql-submit").removeAttr("disabled");
+				return true;
+			}else{
+				// $("#project-mysql-submit").attr("disabled",true);	
+				document.getElementById("project-mysql-submit").disabled=true;
+			}
+		}
+		var ischeck=true;//全选标记
+		window.onload = function() {
+		//	initCheck();
+			var $ = function(ids) {
+				return document.getElementById(ids);
+			}
+			var tabs = $("tabs").getElementsByTagName("li");
+			var state = $("state");
+			var ul = list.getElementsByTagName("ul");
+			
+			for (var i = 0; i < tabs.length; i++) {
+				tabs[i].index = i;
+				//onmouseover
+				tabs[i].onclick = function() {
+					for (var i = 0; i < tabs.length; i++) {
+						tabs[i].className = ul[i].className = '';
+					}
+					this.className = ul[this.index].className = "active";
+				}
+			}
+			initCheck();
+			
+		}
+	function initCheck(){
+		formAttr.forEach(function(item, index, arr){
+				// $("#"+item).on('input',function(){
+				// 	mybatisValid();	
+				// });
+				// $("#"+item).blur(function(){
+				// 	mybatisValid();	
+				// });
+				var mybatisInput=document.getElementById(item);
+				mybatisInput.addEventListener("blur",function () {
+					mybatisValid();	
+				});
+				mybatisInput.addEventListener("input",function () {
+					mybatisValid();	
+				})
+
+			});
+			
+			// $("#project-mysql-checkAll").click(function(){
+			// 	$.each($('.mybatischeck'),function(){
+			// 		$(this).prop("checked",!ischeck);
+			// 	});
+			// 	if (ischeck) {
+			// 		ischeck=false;
+			// 	}else{
+			// 		ischeck=true;
+			// 	}
+			// });
+			document.getElementById("project-mysql-checkAll").onclick=function(){
+				var mybatischeck=document.getElementsByClassName("mybatischeck");
+				for (let index = 0; index < mybatischeck.length; index++) {
+					mybatischeck[index].checked=(!ischeck);	
+				}
+				if (ischeck) {
+					ischeck=false;
+				}else{
+					ischeck=true;
+				}
+			}
+	}
+	function getJavaTypeByJdbcType(mysqlType,columnKey){
+	//	var str="Object";
+		//relationList.forEach(function(v,i){
+		//	if(v.mysqlType.toLowerCase() == mysqlType.toLowerCase()){
+		//		return v.javaType;
+				
+		//	}
+		//});
+		for(let i=0;i<relationList.length;i++){
+			let v  = relationList[i];
+			if(v.mysqlType.toLowerCase() == mysqlType.toLowerCase()){
+				return v.javaType;
+			}
+		}
+		throw "getJavaTypeByJdbcType解析失败,可能原因：空格,columnKey>>>"+columnKey+"---mysqlType>>>"+mysqlType;
+	}
+	function getJavaMybaticTypeByMysqlType(mysqlType,columnKey){
+		// var str="string";
+		for(let i=0;i<relationList.length;i++){
+			let v  = relationList[i];
+			if(v.mysqlType.toLowerCase() == mysqlType.toLowerCase()){
+				return v.javaMybatis;
+			}
+		}
+		
+		throw "getJavaMybaticTypeByMysqlType解析失败,可能原因：空格,columnKey>>>"+columnKey+"---mysqlType>>>"+mysqlType;
+	}
+	function getMybatisTypeByMysqlType(mysqlType,columnKey){
+		for(let i=0;i<relationList.length;i++){
+			let v  = relationList[i];
+			if(v.mysqlType.toLowerCase() == mysqlType.toLowerCase()){
+				return v.mybatisType;
+			}
+		}
+
+		throw "getMybatisTypeByMysqlType解析失败,可能原因：空格,columnKey>>>"+columnKey+"---mysqlType>>>"+mysqlType;
+	}
+	function getMysqlData(id){
+		// var str=$("#"+id).val();
+		var str=document.getElementById(id).value;
+		str=str.replace(/\n/g, "◎●").replace(/\s+/g, ",");
+		var filedInfo="";
+		return str.trim().split("◎●");
+	}
+	//根据create 语句解析 表，表参数列表，列定义列表，索引列表。2019-08-14
+	function getMysqlData2(id){
+		var result = {};
+		var _s=document.getElementById(id).value;
+		var index=0;
+		var _table;
+		var dataRow=new Array();
+		var otherValue = "";
+		var classCommit = "";
+		var nextFlag = false;
+		//寻找表名
+		index = foreachSqlString(_s,index,function(curIndex,data){
+			if(data && nextFlag){
+				_table = data.replace(/`/g,"");
+				return true;
+			}
+			if(data && data.toLowerCase() == "table"){
+				nextFlag = true; 
+			}
+			return false;
+	
+		});
+		if(!_table){
+			throw "表名获取失败";
+		}
+		
+		//获取表参数列表，列定义列表，索引列表
+		var startFlag = false;
+		var reg = new RegExp(".*,$");
+		while(nextFlag && index < _s.length){
+			let line = "";
+			index = foreachSqlString(_s,index,function(curIndex,data){
+				if(!startFlag && data && data == "("){
+				  startFlag = true;
+				  return false;
+				}
+				if(startFlag){
+					let flag = false;
+					if(reg.test(data)){
+						line += data.replace(/,/g,"");
+						if(line.toUpperCase().indexOf("FOREIGN KEY") != -1 || line.toUpperCase().indexOf("PRIMARY KEY") != -1){
+							if(checkBrackets(line)){
+								flag = true;
+							}
+						}else{
+							flag = true;
+						}
+						
+					}else if(isLastRowNum(_s,curIndex,data)){
+						flag = true;
+						nextFlag = false;
+						let bracketsObj1 = getBrackets(data);
+						let bracketsObj2 = getBrackets(line);
+						if(bracketsObj1.right > bracketsObj1.left
+						 && (bracketsObj2.right +bracketsObj1.right) != (bracketsObj2.left +bracketsObj1.left)){
+
+						}else{
+							line += data + " ";
+						}
+						
+						
+					}else{
+						line += data + " ";
+					}
+					
+					if(flag){
+						//添加一行到dataRow
+						//校验括号数目
+						if(!checkBrackets(line)){
+							if(dataRow.length > 0){
+								throw "解析失败括号不相等："+dataRow.length+"行"+dataRow[dataRow.length -1]+">>>>>"+line;
+							}else{
+								throw "解析失败括号不相等：第一行"+line;
+							}
+						}
+
+						dataRow.push(line.replace(/`/g,""));
+						return true;
+					}
+					
+				}
+				return false;
+		  });
+	  }
+	  
+	 
+	  //解析dataRow
+	  var dataArr = new Array();
+	  for(var i =0; i < dataRow.length;i++){
+			let arr = dataRow[i].split(" ");
+			let obj = {};
+			let isValid = true;
+			for(let j =0; j < arr.length;j++){
+				let _str = arr[j];
+				if(j==0){
+					for(let k =0;k< constraintKeywords.length;k++){
+				
+						if(_str.toLowerCase() == constraintKeywords[k].toLowerCase()){
+							isValid = false;
+							break;
+						}
+						if(j != arr.length -1){
+							if((_str+" "+arr[j+1]).toLowerCase() == constraintKeywords[k].toLowerCase()){
+									isValid = false;
+									break;
+							}
+						}
+					}
+					//列名
+					obj.columnKey = _str;
+					j++;
+					//属性
+					obj.type = arr[j].replace(/\(.*\)/g,"");
+				}else{
+					//注释
+					if("COMMENT".toLowerCase() == _str.toLowerCase()){
+						let _commit = "";
+						let f = false;
+						while(j < arr.length){
+							j++;
+							if(f){
+								_commit +=" " + arr[j];
+							}else{
+								_commit += arr[j];
+								f = true;
+							}
+							
+							if(_commit.lastIndexOf("'") == (_commit.length-1)){
+									break;
+							}
+						}
+						obj.comment = _commit.replace(/'/g,"");
+					}
+					
+				}
+				if(!isValid){
+					break;
+				}
+			}
+			if(isValid){
+				dataArr.push(obj);
+			}
+	  }
+	   index = foreachSqlString(_s,index,function(curIndex,data){
+				otherValue+=data+" ";
+				if(data.toLowerCase().indexOf("comment=")!= -1){
+					  //获取类注释
+					classCommit = data.substring(8).replace(/'/g,"");
+				}
+				return false;
+		});
+		result.table = _table;
+		result.dataRow = dataArr;
+		result.classCommit = classCommit;
+		return result;
+	 }
+	
+	
+	function checkBrackets(line){
+		let obj = getBrackets(line);
+		return obj.left == obj.right;
+	}
+
+	function getBrackets(line){
+		let left = 0;
+		let right = 0;
+		for(let x=0;x<line.length;x++){
+		   if(line.charAt(x) == "("){
+				left++;
+			}else if(line.charAt(x) == ")"){
+				right++;
+			}
+		}
+		return {"left":left,"right":right};
+	}
+
+	function isLastRowNum(_s,index,data){
+		if(data.indexOf(",") == -1 && data.indexOf(")")!= -1){
+
+			for(let i = index;i<_s.length;i++){
+				if(_s.charAt(i) == ","){
+					return false;
+				}
+				
+			}
+			return true;
+		}
+		return false;
+	}
+	
+	function foreachSqlString(_s,index,dealFunc){
+	    let i = index;
+		for(;i<_s.length;i++){
+			let _r = "";
+			//寻找一个单词
+			while(i <= _s.length){
+				if(_s.charAt(i)==" " || _s.charAt(i)=="\n" || _s.charAt(i)=="\t" || i >= _s.length){
+					break;
+				}
+				_r+=_s.charAt(i);
+				i++;
+			}
+			if(_r){
+				if(dealFunc(i,_r)){
+					break;
+				}
+			}
+		}
+		return i;
+	}
+	
+	function stringFormat() {
+		 if (arguments.length == 0)
+			 return null;
+		 var str = arguments[0];
+		 for (var i = 1; i < arguments.length; i++) {
+			 var re = new RegExp('\\{' + (i - 1) + '\\}', 'gm');
+			 str = str.replace(re, arguments[i]);
+		 }
+		 return str;
+	}
+
+	function getHump(colunm,radioName){
+		colunm=colunm.trim();
+		var radio=document.getElementsByName(radioName);
+		var r=null;   //  r为radio中选中的值
+		for(var i=0;i<radio.length;i++){
+			if(radio[i].checked==true) {
+					r=radio[i].value;
+					break;
+			}
+		}
+		// var r=$('input:radio[name="'+radioName+'"]:checked').val();
+		if(!r || r == 0){
+			return colunm;
+		}
+		var temp="";
+		var flag=false;
+		colunm.split("").forEach(function(c, i) {
+				if(i == 0){
+					if("_" !== c){
+						temp+=c.toLowerCase();
+					}
+				}else{
+					if("_" == c){
+						flag=true;
+					}else{
+						if(flag){
+							temp+=c.toUpperCase();
+							flag=false;
+						}else{
+							temp+=c.toLowerCase();
+						}
+					}
+				}
+				
+			});
+		return temp;
+	}
+	function dateFtt(fmt, date) { //author: meizz   
+            var o = {
+                "M+": date.getMonth() + 1, //月份   
+                "d+": date.getDate(), //日   
+                "h+": date.getHours(), //小时   
+                "m+": date.getMinutes(), //分   
+                "s+": date.getSeconds(), //秒   
+                "q+": Math.floor((date.getMonth() + 3) / 3), //季度   
+                "S": date.getMilliseconds() //毫秒   
+            };
+            if(/(y+)/.test(fmt))
+                fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for(var k in o)
+                if(new RegExp("(" + k + ")").test(fmt))
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+	function generatorModel() {
+		try{
+			var template="";
+			var resultRes=getMysqlData2("project-data-m");
+			var classCommit = resultRes.classCommit;
+			try{
+			 template="package "+
+						document.getElementById("project-packageInfo-m").value.trim()+";\n"+
+						"/**\n" +
+						" * \n" +
+						" * @Title: "+document.getElementById("project-modelName-m").value.trim()+"\n" +
+						" * @Description: "+(classCommit?classCommit:"TODO")+"\n" +
+						" * @author \n" +
+						" * @date " + dateFtt("yyyy-MM-dd hh:mm:ss", new Date())+"\n" +
+						" */ \n" +
+						"\r\npublic class " +
+						document.getElementById("project-modelName-m").value.trim()+"{\r\n" +"{0} \r\n}";
+			}catch(e){}
+			
+			var fieldTemplate="private {0} {1}; \r\n";
+			// var arr=getMysqlData("project-data-m");
+			var arr = resultRes.dataRow;
+			var filedInfo="";
+			arr.forEach(function(v, i) {
+				if(v){
+				  //	var list=v.split(",");
+					var temp;
+					if(v.comment){
+						temp = "/**"+v.comment + "*/\n\t"+ fieldTemplate;
+					}else{
+						temp = fieldTemplate;
+					}
+					filedInfo+="\t"+stringFormat(temp,getJavaTypeByJdbcType(v.type,v.columnKey),getHump(v.columnKey,"hump-model"));
+				}
+			});
+			document.getElementById("project-result-m").value=stringFormat(template,filedInfo);
+		}catch(e){
+			alert(e);
+			return ;
+		}
+	}
+
+	function generatorMybatisXml(id){
+		try{
+			// 0 ResultMap 1 sql 2 selectList 3 selectOne 4 insert 5 insertSelect 6 update 7 updateSelect 8 delete
+			var mybatisXml="<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\r\n"+
+					"<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\" \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\" >\r\n"+
+					"<mapper namespace=\""+document.getElementById("project-mysql-namespace").value.trim()+"\">\r\n"+
+						"{0} {1} {2} {3} {4} {5} {6} {7} {8} {9}"+
+					"\r\n</mapper>";
+			// var array=getMysqlData("project-mysql-html");
+			var resultRes=getMysqlData2("project-mysql-html");
+			
+			var array = resultRes.dataRow;
+			var table = resultRes.table;
+			var classCommit = resultRes.classCommit;
+			var data=[];
+			var primaryKey=document.getElementById("project-mysql-id").value.trim();
+			matchId = false;
+			for (let index = 0; index < array.length; index++) {
+				const element = array[index];
+				if(element){
+					// var list= element.split(",");
+					var field=element.columnKey;
+					var type=element.type;
+					if(!field || !type){
+						alert(element+"格式不正确")
+						return;
+					}
+					if(!matchId && primaryKey == field.trim()){
+						matchId = true;
+					}
+					var obj = {
+						field : field,
+						type : type
+					}
+					data.push(obj);
+				}
+				
+			}
+			if(!matchId){
+				alert("您输入的主键未匹配到");
+				return ;
+			}
+			var entity=document.getElementById("project-mysql-entity").value.trim();
+			var entityArr=entity.split(".");
+			
+			//名称规范
+			var entityName=entityArr[entityArr.length-1][0].toLowerCase()+entityArr[entityArr.length-1].substring(1);
+			var sqlName=entityName+"BaseColumnListSql";
+			var sqlAliasName=entityName+"BaseColumnAsListSql";
+			var sqlWhereName=entityName+"BaseColumnWhereSql";
+			var resultMapName=entityName+"BaseResultMap";
+			var resulteMap=generatorResultMap(data,entity,entityArr,primaryKey,resultMapName);
+			var sql=generatorSql(data,entity,entityArr,primaryKey,sqlName,sqlAliasName,sqlWhereName);
+			var sqlWhere=generatorWhereSql(data,entity,entityArr,primaryKey,sqlName,sqlAliasName,sqlWhereName);
+			var selectList=generatorSelectList(data,entity,entityArr,primaryKey,sqlName,sqlWhereName,resultMapName,table);
+			var selectOne=generatorSelectOne(data,entity,entityArr,primaryKey,sqlName,resultMapName,table);
+			var insert=generatorInsert(data,entity,entityArr,primaryKey,table);
+			var insertSelect=generatorInsertSelective(data,entity,entityArr,primaryKey,table);
+			var update=generatorUpdate(data,entity,entityArr,primaryKey,table);
+			var updateSelect=generatorUpdateSelective(data,entity,entityArr,primaryKey,table);
+			var deleteStr =generatorDelete(data,entity,entityArr,primaryKey,table);
+			var insertBatchStr=generatorInsertBatch(data,entity,entityArr,primaryKey,table);
+			if(!isChecked("SelectList") && !isChecked("SelectOne")){
+				sql = "";
+			}
+			if(isChecked("SelectList")){
+					sql+=sqlWhere;
+			}
+
+			var mapper=stringFormat(mybatisXml,resulteMap,sql,selectList,selectOne,insert,insertSelect,insertBatchStr,update,updateSelect,deleteStr);
+			document.getElementById("project-mysql-result").value=mapper;
+			
+			generatorDao(data,entity,classCommit,primaryKey);
+
+		}catch(e){
+			alert(e);
+			return ;
+		}
+	}
+	
+	
+	function generatorDao(data,entity,classCommit,primaryKey) {
+		var template="";
+		var primaryKeyType=""
+		try{
+			data.forEach(function(v, i) {
+				if(v){
+					if(v.field == primaryKey){
+						primaryKeyType=getJavaTypeByJdbcType(v.type,v.columnKey);
+						throw new Error("exists iterate");
+					}
+				}
+			});	
+		}catch(e){}
+		try{
+			var namespace = document.getElementById("project-mysql-namespace").value.trim();
+			var package = "";
+			var className = "";
+			if(namespace.lastIndexOf(".")> -1){
+				package = namespace.substring(0,namespace.lastIndexOf("."));
+				className = namespace.substring(namespace.lastIndexOf(".")+1)
+			}
+			template="package "+package+";\r\n\r\n"+
+			"import "+entity+";\r\n\r\nimport java.util.List;\r\nimport org.apache.ibatis.annotations.Param;\r\n"+
+			"/**\n" +
+			" * \n" +
+			" * @Title: "+className+"\n" +
+			" * @Description: "+(classCommit?classCommit:"TODO")+"\n" +
+			" * @author \n" +
+			" * @date " + dateFtt("yyyy-MM-dd hh:mm:ss", new Date())+"\n" +
+			" */ \n" +
+
+			"public interface " +className+"{\r\n" +"{0} \r\n\r\n}";
+		}catch(e){}
+		var classNameLower = "";
+		if(entity.lastIndexOf(".")> -1){
+			package = entity.substring(0,entity.lastIndexOf("."));
+			className = entity.substring(entity.lastIndexOf(".")+1)
+			//首字母小写
+			classNameLower = className[0].toLowerCase()+className.substring(1);
+		}
+		var filedInfo="\tList<"+className+"> selectList("+className+" "+classNameLower+"); \r\n\r\n"+
+						   "\t"+className+" selectOne(@Param(\""+getHump(primaryKey,"hump")+"\") "+primaryKeyType+" "+getHump(primaryKey,"hump")+"); \r\n\r\n"+
+							"\tint insert("+className+" "+classNameLower+"); \r\n\r\n"+
+							"\tint insertBatch(@Param(\"list\") List<"+className+"> list); \r\n\r\n"+
+							"\tint insertSelective("+className+" "+classNameLower+"); \r\n\r\n"+
+							"\tint update("+className+" "+classNameLower+"); \r\n\r\n"+
+							"\tint updateSelective("+className+" "+classNameLower+"); \r\n\r\n"+
+							"\tvoid delete(@Param(\""+getHump(primaryKey,"hump")+"\") "+primaryKeyType+" "+getHump(primaryKey,"hump")+"); \r\n\r\n";
+
+		document.getElementById("project-mysql-result-dao").value=stringFormat(template,filedInfo);
+	}
+	function isChecked(value){
+		var flag=false;
+		// $.each($('input:checkbox:checked'),function(){
+		// 	if(value == $(this).val()){
+		// 		flag=true;
+		// 	}
+		// });
+		var mybatischeck=document.getElementsByClassName("mybatischeck");
+		for (let index = 0; index < mybatischeck.length; index++) {
+			const element=mybatischeck[index];
+			if(element.checked && element.value==value){
+				flag=true;
+				break;
+			}	
+		}
+		return flag;
+	}
+	function generatorResultMap(data,entity,entityArr,primaryKey,resultMapName){
+		if(!isChecked("ResultMap")){
+			return "";
+		}
+		var template="\t<resultMap id=\""+resultMapName+"\" type=\""+entity+"\">\r\n{0}\t</resultMap>\r\n";
+		var resultMap="";
+		var tempArr = [];
+		var index = 1;
+		data.forEach(function(v, i) {
+			if(v){
+				var column=v.field;
+				var type=v.type;
+				if(document.getElementById("project-mysql-id").value && column == document.getElementById("project-mysql-id").value.trim()){
+					tempArr[0]="\t    "+stringFormat("<id column=\"{0}\" property=\"{1}\" jdbcType=\"{2}\"/>\r\n",
+			  				column, 
+							getHump(column,"hump"),
+							getMybatisTypeByMysqlType(type,column)
+			  		);
+				}else{
+					tempArr[index++]="\t    "+stringFormat("<result column=\"{0}\" property=\"{1}\" jdbcType=\"{2}\"/>\r\n",
+			  				column, 
+							getHump(column,"hump"),
+							getMybatisTypeByMysqlType(type,column)
+			  		);
+				}
+			}
+		});
+		tempArr.forEach(function(v, i) {
+			if(v){
+				resultMap+=v;
+			}
+		})
+		return stringFormat(template,resultMap);
+
+	}
+
+	function generatorSql(array,entity,entityArr,primaryKey,sqlName,sqlAliasName,sqlWhereName){
+		var template="\t<sql id=\"{0}\">\r\n\t\t{1}\r\n\t</sql>\r\n";
+		var ifTemplate1="<if test=\"{0} != null\" >\r\n\t         AND {1} = #{{2},jdbcType={3}}\r\n\t    </if>\r\n\t\t";
+		var sql="";
+		var sqlalias="";
+		for (let index = 0; index < array.length; index++) {
+			const v = array[index];
+			if(v){
+				var column=v.field;
+				var type=v.type;
+				var javaField=getHump(column,"hump");
+				if(index == array.length-1) {
+					sql+=column;
+					sqlalias+=column+" as "+javaField;
+				}else{
+					sql+=column+",";
+					sqlalias+=column+" as "+javaField+",";
+					
+				}
+				flag=true;
+		
+				if(index%10==9) {
+					sql+="\r\n\t\t";
+					sqlalias+="\r\n\t\t";
+				}
+			}
+			
+		}
+		if(sql.endWith(",")){
+			sql=sql.substring(0, sql.lastIndexOf(',')); 
+		}
+		if(sqlalias.endWith(",")){
+			sqlalias=sqlalias.substring(0, sqlalias.lastIndexOf(',')); 
+		}
+		 
+		return stringFormat(template,sqlName,sql)+stringFormat(template,sqlAliasName,sqlalias);
+	}
+	function generatorWhereSql(array,entity,entityArr,primaryKey,sqlName,sqlAliasName,sqlWhereName){
+		var template="\t<sql id=\"{0}\">\r\n\t\t{1}\r\n\t</sql>\r\n";
+		var ifTemplate1="<if test=\"{0} != null\" >\r\n\t         AND {1} = #{{2},jdbcType={3}}\r\n\t    </if>\r\n\t\t";
+		var sqlwhere="";
+		for (let index = 0; index < array.length; index++) {
+			const v = array[index];
+			if(v){
+				var column=v.field;
+				var type=v.type;
+				var javaField=getHump(column,"hump");
+				if(index == array.length-1) {
+					if(primaryKey != column){//主键去除
+						sqlwhere+=stringFormat("\r\n\t\t"+ifTemplate1,javaField,column,javaField,getMybatisTypeByMysqlType(type,column));
+					}
+				}else{
+					if(primaryKey != column){//主键去除
+						sqlwhere+=stringFormat(ifTemplate1,javaField,column,javaField,getMybatisTypeByMysqlType(type,column));
+					}
+					
+				}
+				flag=true;
+			}
+			
+		}
+		if(sqlwhere.endWith(",")){
+			sqlwhere=sqlwhere.substring(0, sqlwhere.lastIndexOf(',')); 
+		}
+		return stringFormat(template,sqlWhereName,sqlwhere);
+	}
+	function generatorSelectList(data,entity,entityArr,primaryKey,sqlName,sqlWhereName,resultMapName,table){
+		if(!isChecked("SelectList")){
+			return "";
+		}
+		
+		return "\r\n\t<select id=\"selectList\" parameterType=\""+entity+"\" resultMap=\""+resultMapName+"\">\r\n\t\t"+
+			"SELECT <include refid=\""+sqlName+"\" /> \r\n\t\tFROM "+table+" \r\n\t\t<where>\r\n\t\t\t"+
+			"<include refid=\""+sqlWhereName+"\" />\r\n\t\t"+
+			"</where>\r\n\t</select>\r\n";
+	}
+	function generatorSelectOne(data,entity,entityArr,primaryKey,sqlName,resultMapName,table){
+		if(!isChecked("SelectOne")){
+			return "";
+		}
+		var type="";
+		var primaryKeyType=""
+		var column="";
+		try{
+			data.forEach(function(v, i) {
+				if(v){
+					column=v.field;
+					if(column == primaryKey){
+						type=v.type;
+						primaryKeyType=getJavaTypeByJdbcType(v.type,v.columnKey);
+						throw new Error("EndIterative");
+					}
+				}
+			});
+		}catch(e){}
+		return "\r\n\t<select id=\"selectOne\" parameterType=\""+primaryKeyType+"\" resultMap=\""+resultMapName+"\">\r\n\t\t"+
+			"SELECT <include refid=\""+sqlName+"\" /> \r\n\t\tFROM "+table+"\r\n\t\t<where>\r\n\t\t\t"+
+				primaryKey+" = #{"+getHump(primaryKey,"hump")+",jdbcType="+getMybatisTypeByMysqlType(type,column)+"}\r\n\t\t"+
+			"</where>\r\n\t</select>\r\n";
+	}
+	function generatorInsert(array,entity,entityArr,primaryKey,table){
+		if(!isChecked("Insert")){
+			return "";
+		}
+		var template="\r\n\t<insert id=\"insert\" parameterType=\""+entity+"\" useGeneratedKeys=\"true\" "+
+						"keyProperty=\""+getHump(primaryKey,"hump")+"\" keyColumn=\""+primaryKey+"\">\r\n\t\t"+
+		
+			"INSERT INTO "+table+" (\r\n\t\t\t{0}\r\n\t\t) \r\n\t\t VALUES (\r\n\t\t\t{1}\r\n\t\t)\r\n\t"+
+			//"\t<selectKey order=\"AFTER\" resultType=\"{2}\" keyColumn=\""+primaryKey+"\" keyProperty=\""+getHump(primaryKey,"hump")+"\">\r\n"+
+			//"\t\t\tSELECT LAST_INSERT_ID() AS "+primaryKey+"\r\n"+
+			//"\t\t</selectKey>\r\n\t"+
+			"</insert>\r\n";
+		var  properityTemplate="#{{0},jdbcType={1}}";
+		var resulteType="";
+		var value1="";
+		var value2="";
+		for (let index = 0; index < array.length; index++) {
+			const v = array[index];
+				if(v){
+					var column=v.field;
+					var type=v.type;
+					if(column == primaryKey){
+						resulteType=getJavaMybaticTypeByMysqlType(type,column);
+					}else{
+						if(index == array.length-1) {
+							value1+=column;
+							value2+=stringFormat(properityTemplate,getHump(column,"hump"),getMybatisTypeByMysqlType(type,column));
+						}else{
+							value1+=column+",\r\n\t\t\t";
+							value2+=stringFormat(properityTemplate,getHump(column,"hump"),getMybatisTypeByMysqlType(type,column))+",\r\n\t\t\t";
+						}
+					}
+				//	if(index%10==9) {
+				//		value1+="\r\n\t\t\t";
+				//	}
+				//	if(index%6==5) {
+				//		value2+="\r\n\t\t\t";
+				//	}
+				}
+			}
+			if(value1.endWith(",")){
+				value1=value1.substring(0, value1.lastIndexOf(',')); 
+			}
+			if(value2.endWith(",")){
+				value2=value2.substring(0, value2.lastIndexOf(',')); 
+			}
+			return stringFormat(template,value1,value2,resulteType);
+	}
+	function generatorInsertSelective(data,entity,entityArr,primaryKey,table){
+		if(!isChecked("InsertSelective")){
+			return "";
+		}
+		var template="\r\n\t<insert id=\"insertSelective\" parameterType=\""+entity+"\" useGeneratedKeys=\"true\" "+
+						"keyProperty=\""+getHump(primaryKey,"hump")+"\" keyColumn=\""+primaryKey+"\">\r\n\t\t"+
+					"INSERT INTO "+table+"\r\n\t\t"+
+					"<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">\r\n\t\t\t{0}</trim>\r\n\t\t"+
+					"<trim prefix=\"VALUES(\" suffix=\")\" suffixOverrides=\",\">\r\n\t\t\t{1}</trim>\r\n\t"+
+					
+				//	"\t<selectKey order=\"AFTER\" resultType=\"{2}\" keyColumn=\""+primaryKey+"\" keyProperty=\""+getHump(primaryKey,"hump")+"\">\r\n"+
+				//	"\t\t\tSELECT LAST_INSERT_ID() AS "+primaryKey+"\r\n"+
+				//	"\t\t</selectKey>\r\n\t"+
+					
+					"</insert>\r\n";		
+		var ifTemplate1="<if test=\"{0} != null\" >{1},</if>\r\n\t\t\t";
+		var ifTemplate2="<if test=\"{0} != null\" >#{{1},jdbcType={2}},</if>\r\n\t\t\t";
+		var value1="";
+		var value2="";
+		var resulteType="";
+		data.forEach(function(v, i) {
+				if(v){
+					var column=v.field;
+					var type=v.type;
+					var javaField=getHump(column,"hump");
+					if(column == primaryKey){
+						resulteType=getJavaMybaticTypeByMysqlType(type,column);
+					}else{
+						value1+=stringFormat(ifTemplate1,javaField,column);
+						value2+=stringFormat(ifTemplate2,javaField,javaField,getMybatisTypeByMysqlType(type,column));
+					}
+				}
+		});
+		return stringFormat(template,value1,value2,resulteType);
+	}
+	
+	function generatorInsertBatch(array,entity,entityArr,primaryKey,table){
+		if(!isChecked("InsertBatch")){
+			return "";
+		}
+		var template="\r\n\t<insert id=\"insertBatch\" parameterType=\"java.util.List\">\r\n\t\t"+
+		
+			"INSERT INTO "+table+" (\r\n\t\t\t{0}\r\n\t\t) \r\n\t\t VALUES \r\n\t\t"+
+			"<foreach collection=\"list\" item=\"bo\" index=\"index\" separator=\",\">\r\n\t\t\t(\r\n\t\t\t  {1}\r\n\t\t\r\n\t\t\t)\r\n\t\t</foreach>\r\n\t\t\r\n\t"+
+
+			"</insert>\r\n";
+		var  properityTemplate="#{bo.{0},jdbcType={1}}";
+		var resulteType="";
+		var value1="";
+		var value2="";
+		for (let index = 0; index < array.length; index++) {
+			const v = array[index];
+				if(v){
+					var column=v.field;
+					var type=v.type;
+					if(column == primaryKey){
+						resulteType=getJavaMybaticTypeByMysqlType(type,column);
+					}else{
+						if(index == array.length-1) {
+							value1+=column;
+							value2+=stringFormat(properityTemplate,getHump(column,"hump"),getMybatisTypeByMysqlType(type,column));
+						}else{
+							value1+=column+",\r\n\t\t\t";
+							value2+=stringFormat(properityTemplate,getHump(column,"hump"),getMybatisTypeByMysqlType(type,column))+",\r\n\t\t\t  ";
+						}
+					}
+				}
+			}
+			if(value1.endWith(",")){
+				value1=value1.substring(0, value1.lastIndexOf(',')); 
+			}
+			if(value2.endWith(",")){
+				value2=value2.substring(0, value2.lastIndexOf(',')); 
+			}
+			return stringFormat(template,value1,value2,resulteType);
+	}
+	function generatorUpdate(array,entity,entityArr,primaryKey,table){
+		if(!isChecked("Update")){
+			return "";
+		}
+		var template="\r\n\t<update id=\"update\" parameterType=\""+entity+"\">\r\n\t\t"+
+				"UPDATE "+table+"\r\n\t\t"+
+				"SET\r\n\t\t\t{0}\r\n\t\t"+
+				"WHERE "+primaryKey+"=#{"+getHump(primaryKey,"hump")+",jdbcType={1}}\r\n\t"+
+				"</update>\r\n";
+		var setPropertity="{0} = #{{1},jdbcType={2}}";		
+		var primaryKeyType=""
+		var value="";
+		for (let index = 0; index < array.length; index++) {
+			const v = array[index];
+				if(v){
+					var column=v.field;
+					var type=v.type;
+					var javaField=getHump(column,"hump");
+					if(column == primaryKey){
+						primaryKeyType=getMybatisTypeByMysqlType(type,column);
+					}else{
+						if(index == array.length-1) {
+							value+=stringFormat(setPropertity,column,javaField,getMybatisTypeByMysqlType(type,column));
+						}else{
+							value+=stringFormat(setPropertity,column,javaField,getMybatisTypeByMysqlType(type,column))+",";
+						}
+						flag=true;
+						value+="\r\n\t\t\t";
+						
+					}
+			}
+		}
+		if(value.endWith(",")){
+			value=value.substring(0, value.lastIndexOf(',')); 
+		}
+
+		return stringFormat(template,value,primaryKeyType);
+	}
+	function generatorUpdateSelective(data,entity,entityArr,primaryKey,table){
+		if(!isChecked("UpdateSelective")){
+			return "";
+		}
+		var template="\r\n\t<update id=\"updateSelective\" parameterType=\""+entity+"\">\r\n\t\t"+
+				"UPDATE "+table+"\r\n\t\t"+
+				"<set>\r\n\t\t\t{0}</set>\r\n\t\t\t"+
+				"WHERE "+primaryKey+"=#{"+getHump(primaryKey,"hump")+",jdbcType={1}}\r\n\t"+
+				"</update>\r\n"
+		//var ifTemplate="<if test=\"{0} != null and {1} != ''\" >\r\n\t    {2}==#{{3},jdbcType={4}},\r\n\t</if>\r\n\t";			
+		var ifTemplate1="<if test=\"{0} != null\" > {1}=#{{2},jdbcType={3}}, </if>\r\n\t\t\t";
+		var value="";
+		var primaryKeyType=""
+		data.forEach(function(v, i) {
+			if(v){
+				var column=v.field;
+				var type=v.type;
+				var javaField=getHump(column,"hump");
+				if(column == primaryKey){
+					primaryKeyType=getMybatisTypeByMysqlType(type,column);
+				}else{
+					//value+=stringFormat(ifTemplate,javaField,javaField,column,javaField,getMybatisTypeByMysqlType(type,column));
+					value+=stringFormat(ifTemplate1,javaField,column,javaField,getMybatisTypeByMysqlType(type,column));
+				}
+			}
+		});	
+		return stringFormat(template,value,primaryKeyType);
+	}
+	function generatorDelete(data,entity,entityArr,primaryKey,table){
+		if(!isChecked("Delete")){
+			return "";
+		}
+	
+		var primaryKeyType=""
+		var primaryKeyJdbcType=""
+		try{
+			data.forEach(function(v, i) {
+				if(v){
+					var column=v.field;
+					var type=v.type;
+					if(column == primaryKey){
+						primaryKeyType=getMybatisTypeByMysqlType(type,column);
+						primaryKeyJdbcType = getJavaTypeByJdbcType(v.type,v.columnKey);
+						throw new Error("exists iterate");
+					}
+				}
+			});	
+		}catch(e){}
+		var template="\r\n\t<delete id=\"delete\" parameterType=\""+primaryKeyJdbcType+"\">\r\n\t\t"+
+				"DELETE FROM "+table+"\r\n\t\t"+
+				"WHERE "+primaryKey+"=#{"+getHump(primaryKey,"hump")+",jdbcType={0}}\r\n\t"+
+				"</delete>\r\n";
+		return stringFormat(template,primaryKeyType);
+	}
+	function example(type){
+		let sql = " CREATE TABLE sys_log (\n" +
+                    " `id` BIGINT NOT NULL PRIMARY KEY AUTO_INCRE MENT COMMENT '主键',\n" +
+                    " `oper_name` VARCHAR(50) NOT NULL COMMENT '操作人编号',\n" +
+                    " `oper_type` TINYINT UNSIGNED NOT NULL COMMENT '操作类型',\n" +
+                    " `oper_note` VARCHAR(100) COMMENT '操作描述',\n" +
+                    " `method` VARCHAR(150) DEFAULT NULL COMMENT '操作方法',\n" +
+                    " `address` VARCHAR(50) DEFAULT NULL COMMENT '远端地址',\n" +
+                    " `exception_details` VARCHAR(50) DEFAULT NULL COMMENT '异常信息',\n" +
+                    " `add_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT '添加时间',\n" +
+                    " KEY idx_oper_type(oper_type),\n" +
+                    " KEY idx_add_time(add_time),\n" +
+                    " KEY idx_oper_name(oper_name)\n" +
+                    " ) ENGINE = InnoDB DEFAULT CHARSET = utf8 COMMENT='系统日志表';"
+		if("1" == type){
+			document.getElementById("project-mysql-id").value = "id";
+			document.getElementById("project-mysql-entity").value = "com.example.domain.SysLog";
+			document.getElementById("project-mysql-namespace").value = "com.example.mapper.SysLogMapper";
+			document.getElementById("project-mysql-html").value = sql;
+		}else if("2" == type){
+			document.getElementById("project-modelName-m").value = "SysLog";
+			document.getElementById("project-packageInfo-m").value = "com.example.domain";
+			document.getElementById("project-data-m").value = sql;
+		}
+		mybatisValid();	
+	}
+</script>
+</html>
